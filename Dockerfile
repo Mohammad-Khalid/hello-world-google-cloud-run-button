@@ -2,7 +2,7 @@
 FROM ubuntu
 
 # Update the repository sources list
-RUN apt-get update
+RUN apt-get update && apt-get install -y gnupg2
 
 ################## BEGIN INSTALLATION ######################
 # Install MongoDB Following the Instructions at MongoDB Docs
@@ -34,6 +34,8 @@ RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version
 RUN npm --version
+
+RUN mkdir -p /usr/src/app
 
 # Create app directory
 WORKDIR /usr/src/app
