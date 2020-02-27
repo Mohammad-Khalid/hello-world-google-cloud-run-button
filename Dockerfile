@@ -130,4 +130,8 @@ RUN npm cache clean -f && npm update && npm install
 
 # Bundle app source
 COPY . ./
-CMD [ "npm", "start" ]
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+CMD [ "mongod", "npm", "start" ]
