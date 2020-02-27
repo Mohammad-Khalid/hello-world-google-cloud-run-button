@@ -8,21 +8,17 @@ RUN apt-get -y update && apt-get install -y gnupg2
 # Install MongoDB Following the Instructions at MongoDB Docs
 # Ref: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 
-RUN apt-get update && \
-apt-get install -y ca-certificates && \
-rm -rf /var/lib/apt/lists/*
-
 # Add the package verification key
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
 # Add MongoDB to the repository sources list
-RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+RUN echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
 # Update the repository sources list once more
 RUN apt-get -y update
 
 # Install MongoDB package (.deb)
-RUN apt-get install -y mongodb-10gen
+RUN apt-get install mongodb-org
 
 # Create the default data directory
 RUN mkdir -p /data/db
