@@ -12,8 +12,6 @@ RUN apt-get update && \
 apt-get install -y ca-certificates && \
 rm -rf /var/lib/apt/lists/*
 
-RUN rm /etc/apt/sources.list.d/mongodb*.list
-
 # Add the package verification key
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
