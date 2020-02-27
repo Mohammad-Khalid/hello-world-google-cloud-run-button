@@ -1,5 +1,5 @@
 # Set the base image to Ubuntu
-FROM ubuntu
+FROM ubuntu:latest
 
 # Update the repository sources list
 RUN apt-get -y update && apt-get install -y gnupg2
@@ -12,6 +12,8 @@ RUN apt-get update && \
 apt-get install -y ca-certificates && \
 rm -rf /var/lib/apt/lists/*
 
+RUN rm /etc/apt/sources.list.d/mongodb*.list
+
 # Add the package verification key
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 
@@ -19,7 +21,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
 
 # Update the repository sources list once more
-RUN apt-get update
+RUN apt-get -y update
 
 # Install MongoDB package (.deb)
 RUN apt-get install -y mongodb-10gen
@@ -27,7 +29,7 @@ RUN apt-get install -y mongodb-10gen
 # Create the default data directory
 RUN mkdir -p /data/db
 
-RUN apt-get update
+RUN apt-get -y update
 
 RUN apt-get install -y curl
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
