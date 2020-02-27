@@ -12,7 +12,7 @@ RUN apt-get -y update && apt-get install -y gnupg2
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
 
 # Add MongoDB to the repository sources list
-RUN echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+RUN echo "deb http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
 
 # Update the repository sources list once more
 RUN apt-get -y update
