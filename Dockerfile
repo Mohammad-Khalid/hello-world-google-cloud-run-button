@@ -1,29 +1,27 @@
-# Set the base image to Ubuntu
-FROM ubuntu
+FROM debian:jessie-slim
 
-# Update the repository sources list
-RUN apt-get update && apt-get install -y gnupg2
+RUN apt-get update && \
+apt-get install -y ca-certificates && \
+rm -rf /var/lib/apt/lists/*
 
-################## BEGIN INSTALLATION ######################
-# Install MongoDB Following the Instructions at MongoDB Docs
-# Ref: http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
+RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 0C49F3730359A14518585931BC711F9BA15703C6 && \
+gpg --export $GPG_KEYS > /etc/apt/trusted.gpg.d/mongodb.gpg
 
-RUN apt-get install ca-certificates
+ARG MONGO_PACKAGE=mongodb-org
+ARG MONGO_REPO=repo.mongodb.org
+ENV MONGO_PACKAGE=${MONGO_PACKAGE} MONGO_REPO=${MONGO_REPO}
+ENV MONGO_MAJOR 3.4
+ENV MONGO_VERSION 3.4.18
 
-# Add the package verification key
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+RUN echo "deb http://$MONGO_REPO/apt/debian jessie/${MONGO_PACKAGE%-unstable}/$MONGO_MAJOR main" | tee "/etc/apt/sources.list.d/${MONGO_PACKAGE%-unstable}.list"
 
-# Add MongoDB to the repository sources list
-RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | tee /etc/apt/sources.list.d/mongodb.list
+RUN echo "/etc/apt/sources.list.d/${MONGO_PACKAGE%-unstable}.list"
 
-# Update the repository sources list once more
 RUN apt-get update
 
-# Install MongoDB package (.deb)
-RUN apt-get install -y mongodb-10gen
+RUN apt-get install -y ${MONGO_PACKAGE}=$MONGO_VERSION
 
-# Create the default data directory
-RUN mkdir -p /data/db
+VOLUME ["/data/db"]
 
 RUN apt-get update
 
