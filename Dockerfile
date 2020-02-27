@@ -9,10 +9,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install --only=production
-ENV PORT 3002
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
 COPY . ./
+ENV PORT 3002
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD [ "npm", "start" ]
