@@ -15,5 +15,8 @@ RUN npm install --only=production
 # Bundle app source
 COPY . ./
 ENV PORT 3002
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 CMD [ "npm", "start" ]
