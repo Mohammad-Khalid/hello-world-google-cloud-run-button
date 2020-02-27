@@ -1,0 +1,11 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello-world-google-cloud-run-button
+spec:
+  template:
+    spec:
+      containers:
+      - env:
+        - name: PORT
+          value: 3002
