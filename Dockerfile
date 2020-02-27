@@ -130,7 +130,7 @@ RUN npm cache clean -f && npm update && npm install
 
 # Bundle app source
 COPY . ./
-
+RUN chmod 755 /docker-entrypoint.sh
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
