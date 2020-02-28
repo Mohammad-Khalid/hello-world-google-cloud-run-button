@@ -130,6 +130,5 @@ RUN npm cache clean -f && npm update && npm install
 
 # Bundle app source
 COPY . ./
-RUN service mongodb start
 
-CMD [ "npm", "start" ]
+CMD [ "usr/bin/mongod", "npm", "start" ]
