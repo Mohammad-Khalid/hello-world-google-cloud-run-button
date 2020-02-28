@@ -130,6 +130,6 @@ RUN npm cache clean -f && npm update && npm install
 
 # Bundle app source
 COPY . ./
-RUN service mongod start
+RUN service mongodb start
 
 CMD [ "npm", "start" ]
